@@ -1,6 +1,6 @@
 # AI Fashion Advisor
 
-An AI-powered application that provides fashion advice based on uploaded images and context scenarios. The application uses Google's Gemini API for text analysis and OpenAI's DALL-E for generating fashion suggestion images.
+An AI-powered application that provides fashion advice based on uploaded images and context scenarios. The application uses multiple AI services including Google's Gemini API for text analysis, OpenAI's DALL-E, Replicate, and Stability AI for generating fashion suggestion images.
 
 ## Features
 
@@ -12,24 +12,30 @@ An AI-powered application that provides fashion advice based on uploaded images 
 ## Project Structure
 
 ```
-Fashion-Advisor/
+AI-Fashion-Advisor/
 ├── backend/               # Python FastAPI backend
-│   ├── main.py            # Main server file
-│   ├── requirements.txt   # Python dependencies
-│   └── .env.example       # Example environment variables
-├── frontend/              # React TypeScript frontend
-    ├── src/               # Source code
-    ├── public/            # Static assets
-    └── package.json       # Node dependencies
+│   ├── main.py           # Main server file
+│   ├── requirements.txt  # Python dependencies
+│   ├── .env.example     # Example environment variables
+│   └── generated_images/ # AI-generated image outputs
+├── frontend/             # React TypeScript frontend
+    ├── src/             # Source code
+    │   ├── components/  # React components
+    │   ├── services/    # API services
+    │   └── assets/      # Static assets
+    ├── public/          # Public assets
+    └── package.json     # Node dependencies
 ```
 
 ## Prerequisites
 
-- Python 3.9+ with uv package manager
+- Python 3.9+
 - Node.js 18+ with pnpm package manager
 - API keys for:
   - Google Gemini API
   - OpenAI API
+  - Replicate API
+  - Stability AI API
 
 ## Setup and Installation
 
@@ -40,21 +46,24 @@ Fashion-Advisor/
    cd backend
    ```
 
-2. Create a virtual environment and install dependencies using uv:
+2. Install dependencies using pip:
    ```sh
-   uv venv
-   uv pip install -r requirements.txt
+   pip install -r requirements.txt
    ```
 
 3. Copy the `.env.example` file to `.env` and add your API keys:
    ```sh
    cp .env.example .env
    ```
-   Then edit the `.env` file to add your actual API keys.
+   Then edit the `.env` file to add your API keys:
+   - OPENAI_API_KEY
+   - GEMINI_API_KEY
+   - REPLICATE_API_TOKEN
+   - STABILITY_API_KEY
 
 4. Start the backend server:
    ```sh
-   uvicorn main:app --reload
+   python main.py
    ```
    The backend will run on http://localhost:8000
 
@@ -88,6 +97,7 @@ Fashion-Advisor/
 
 - `GET /api/health` - Health check endpoint
 - `POST /api/analyze` - Analyze fashion from an image and scenario
+- `GET /api/config-status` - Check API configuration status
 
 ## Technologies Used
 
@@ -96,11 +106,12 @@ Fashion-Advisor/
 - Python - Programming language
 - Google Gemini API - Text analysis
 - OpenAI DALL-E - Image generation
+- Replicate - AI models
+- Stability AI - Image generation
 
 ### Frontend
 - React - UI library
 - TypeScript - Programming language
-- Chakra UI - Component library
+- Tailwind CSS - Styling
+- Vite - Build tool
 - Axios - HTTP client
-- React Router - Navigation
-- React Dropzone - File uploads
